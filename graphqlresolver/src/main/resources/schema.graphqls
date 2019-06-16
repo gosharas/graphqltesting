@@ -1,5 +1,10 @@
 schema {
     query: BookQuery
+    mutation: BookMutation
+}
+
+type BookMutation{
+    newBook(book: BookInput): Book
 }
 
 type BookQuery {
@@ -10,9 +15,15 @@ type BookQuery {
 
 }
 
-
-
 type Book{
+    isn: String
+    title: String
+    publisher: String
+    authors: String
+    published: String
+}
+
+input BookInput{
     isn: String
     title: String
     publisher: String
