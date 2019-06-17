@@ -1,14 +1,11 @@
-package com.example.sqlworker.rabbit;
+package com.example.graphqlresolver.rabbit;
 
-
-import com.example.sqlworker.model.Bookl;
+import com.example.graphqlresolver.models.Bookl;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.amqp.core.Message;
 import org.springframework.amqp.rabbit.annotation.EnableRabbit;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-
 
 import java.io.IOException;
 import java.util.logging.Logger;
@@ -18,12 +15,9 @@ import java.util.logging.Logger;
 public class RabbitReceiver {
     Logger logger = Logger.getLogger(String.valueOf(RabbitReceiver.class));
 
-    @Autowired
-    RabbitSender rabbitSender;
-
-    @RabbitListener(queues = "querygraph")
+    @RabbitListener(queues = "querygraph2")
     public void work1(Message message) throws InterruptedException {
-        logger.info("worker 1: "+message);
+        logger.info("worker 2: "+message);
 
 //        for (char ch: message.toCharArray()) {
 //            if (ch == '.') Thread.sleep(500);
@@ -35,13 +29,9 @@ public class RabbitReceiver {
         try {
             Bookl bookl = mapper.readValue(new String(body), Bookl.class);
             System.out.println(bookl.toString());
-            rabbitSender.send("info2", bookl);
         } catch (IOException e) {
             e.printStackTrace();
         }
-
-
-
 
 
 
@@ -56,7 +46,4 @@ public class RabbitReceiver {
 //        }
 
     }
-
-
-
 }

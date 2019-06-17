@@ -1,10 +1,10 @@
-package com.example.graphqlresolver.models;
+package com.example.sqlworker.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.io.Serializable;
 
-public class Bookl implements Serializable {
+public class Bookl{
 
     @JsonProperty("method")
     private String method;

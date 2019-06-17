@@ -17,35 +17,40 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 @ComponentScan("com.example.graphqlresolver.rabbit")
 public class RabbitConfig {
-    @Bean
-    public ConnectionFactory connectionFactory() {
-        CachingConnectionFactory connectionFactory = new CachingConnectionFactory("localhost");
-        connectionFactory.setUsername("guest");
-        connectionFactory.setPassword("guest");
-        return connectionFactory;
-    }
-
-    @Bean
-    public MessageConverter jsonMessageConverter(){
-        return new Jackson2JsonMessageConverter();
-    }
-
-    @Bean
-    public ObjectMapper objectMapper() {
-        ObjectMapper mapper = new ObjectMapper();
-        return mapper;
-    }
-
-    @Bean
-    public RabbitTemplate rabbitTemplate() {
-        RabbitTemplate template = new RabbitTemplate(connectionFactory());
-        template.setMessageConverter(jsonMessageConverter());
-        return template;
-    }
+//    @Bean
+//    public ConnectionFactory connectionFactory() {
+//        CachingConnectionFactory connectionFactory = new CachingConnectionFactory("localhost");
+//        connectionFactory.setUsername("guest");
+//        connectionFactory.setPassword("guest");
+//        return connectionFactory;
+//    }
+//
+//    @Bean
+//    public MessageConverter jsonMessageConverter(){
+//        return new Jackson2JsonMessageConverter();
+//    }
+//
+//    @Bean
+//    public ObjectMapper objectMapper() {
+//        ObjectMapper mapper = new ObjectMapper();
+//        return mapper;
+//    }
+//
+//    @Bean
+//    public RabbitTemplate rabbitTemplate() {
+//        RabbitTemplate template = new RabbitTemplate(connectionFactory());
+//        template.setMessageConverter(jsonMessageConverter());
+//        return template;
+//    }
 
     @Bean
     public Queue myQueue1() {
         return new Queue("querygraph");
+    }
+
+    @Bean
+    public Queue myQueue2() {
+        return new Queue("querygraph2");
     }
 
     @Bean
@@ -56,5 +61,10 @@ public class RabbitConfig {
     @Bean
     public Binding infoBinding(){
         return BindingBuilder.bind(myQueue1()).to(directExchange()).with("info");
+    }
+
+    @Bean
+    public Binding infoBinding2(){
+        return BindingBuilder.bind(myQueue2()).to(directExchange()).with("info2");
     }
 }

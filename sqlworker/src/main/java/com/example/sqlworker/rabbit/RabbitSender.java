@@ -1,9 +1,6 @@
-package com.example.graphqlresolver.rabbit;
+package com.example.sqlworker.rabbit;
 
-
-
-import com.example.graphqlresolver.models.Book;
-import com.example.graphqlresolver.models.Bookl;
+import com.example.sqlworker.model.Bookl;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.amqp.support.converter.Jackson2JsonMessageConverter;
 import org.springframework.amqp.support.converter.MessageConverter;

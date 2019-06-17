@@ -20,24 +20,28 @@ public class BookQuery implements GraphQLQueryResolver {
     RabbitSender rabbitSender;
 
     public List<Book> books(){
+        rabbitSender.send("info", new Bookl("books"));
         return bookRepository.findAll();
     }
 
     public Book bookByIsn(String isn){
-//        Bookl bookl = new Bookl();
-//        bookl.setIsn("1");
-//        bookl.setAuthors("auth1");
-//        bookl.setPublished("publed1");
-        Book book = bookRepository.findBookByIsn(isn);
-        rabbitSender.send("info", book);
-        return book;
+        Bookl bookl = new Bookl("bookByIsn");
+        bookl.setIsn(isn);
+        rabbitSender.send("info", bookl);
+        return bookRepository.findBookByIsn(isn);
     }
 
     public List<Book> bookByTitle(String title){
+        Bookl bookl = new Bookl("bookByTitle");
+        bookl.setTitle(title);
+        rabbitSender.send("info", bookl);
         return bookRepository.findBookByTitle(title);
     }
 
     public List<Book> bookByPublisher(String publisher){
+        Bookl bookl = new Bookl("bookByPublisher");
+        bookl.setPublisher(publisher);
+        rabbitSender.send("info", bookl);
         return  bookRepository.findBookByPublisher(publisher);
     }
 }
