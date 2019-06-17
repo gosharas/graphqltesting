@@ -3,6 +3,7 @@ package com.example.graphqlresolver.rabbit;
 
 
 import com.example.graphqlresolver.models.Book;
+import com.example.graphqlresolver.models.Bookl;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
