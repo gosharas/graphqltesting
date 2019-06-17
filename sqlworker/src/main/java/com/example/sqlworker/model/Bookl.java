@@ -3,8 +3,11 @@ package com.example.sqlworker.model;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.io.Serializable;
+import java.util.List;
 
 public class Bookl{
+    @JsonProperty("reqId")
+    private String reqId;
 
     @JsonProperty("method")
     private String method;
@@ -23,6 +26,9 @@ public class Bookl{
 
     @JsonProperty("published")
     private String published;
+
+    @JsonProperty("bookList")
+    private List<Book> bookList;
 
     public Bookl(String method, String isn, String title, String publisher, String authors, String published) {
         this.method = method;
@@ -88,15 +94,33 @@ public class Bookl{
         this.published = published;
     }
 
+    public String getReqId() {
+        return reqId;
+    }
+
+    public void setReqId(String reqId) {
+        this.reqId = reqId;
+    }
+
+    public List<Book> getBookList() {
+        return bookList;
+    }
+
+    public void setBookList(List<Book> bookList) {
+        this.bookList = bookList;
+    }
+
     @Override
     public String toString() {
         return "Bookl{" +
-                "method='" + method + '\'' +
+                "reqId='" + reqId + '\'' +
+                ", method='" + method + '\'' +
                 ", isn='" + isn + '\'' +
                 ", title='" + title + '\'' +
                 ", publisher='" + publisher + '\'' +
                 ", authors='" + authors + '\'' +
                 ", published='" + published + '\'' +
+                ", bookList=" + bookList +
                 '}';
     }
 }

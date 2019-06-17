@@ -1,6 +1,8 @@
 package com.example.sqlworker.rabbit;
 
 
+import com.example.sqlworker.DAO.BookExecutor;
+import com.example.sqlworker.DAO.BookRepositoryImpl;
 import com.example.sqlworker.model.Bookl;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.amqp.core.Message;
@@ -21,6 +23,9 @@ public class RabbitReceiver {
     @Autowired
     RabbitSender rabbitSender;
 
+    @Autowired
+    BookRepositoryImpl bookRepositoryImpl;
+
     @RabbitListener(queues = "querygraph")
     public void work1(Message message) throws InterruptedException {
         logger.info("worker 1: "+message);
@@ -35,7 +40,8 @@ public class RabbitReceiver {
         try {
             Bookl bookl = mapper.readValue(new String(body), Bookl.class);
             System.out.println(bookl.toString());
-            rabbitSender.send("info2", bookl);
+            BookExecutor bookExecutor = new BookExecutor(bookl, rabbitSender, bookRepositoryImpl);
+            new Thread(bookExecutor).start();
         } catch (IOException e) {
             e.printStackTrace();
         }

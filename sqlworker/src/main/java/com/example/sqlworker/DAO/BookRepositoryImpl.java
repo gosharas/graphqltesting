@@ -14,22 +14,22 @@ public class BookRepositoryImpl {
     BookRepository bookRepository;
 
     public List<Book> books(){
-        return null;
+        return bookRepository.findAll();
     }
 
     public Book bookByIsn(String isn){
-        return null;
+        return bookRepository.findBookByIsn(isn);
     }
 
     public List<Book> bookByTitle(String title){
-        return null;
+        return bookRepository.findBookByTitle(title);
     }
 
     public List<Book> bookByPublisher(String publisher){
-        return null;
+        return bookRepository.findBookByPublisher(publisher);
     }
 
     public Book newBook(Book book){
-        return null;
+        return bookRepository.saveAndFlush(book);
     }
 }
