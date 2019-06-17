@@ -13,8 +13,6 @@ import java.util.List;
 @EnableDiscoveryClient
 public class GraphqlresolverApplication{
 
-    @Autowired
-    BookRepository bookRepository;
 
     public static void main(String[] args) {
         SpringApplication.run(GraphqlresolverApplication.class, args);
