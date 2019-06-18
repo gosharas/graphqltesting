@@ -3,6 +3,7 @@ package com.example.sqlworker.model;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.io.Serializable;
+import java.util.Arrays;
 import java.util.List;
 
 public class Bookl{
@@ -29,6 +30,7 @@ public class Bookl{
 
     @JsonProperty("bookList")
     private List<Book> bookList;
+
 
     public Bookl(String method, String isn, String title, String publisher, String authors, String published) {
         this.method = method;

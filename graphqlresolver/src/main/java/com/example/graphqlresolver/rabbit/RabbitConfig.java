@@ -1,6 +1,7 @@
 package com.example.graphqlresolver.rabbit;
 
 import com.example.graphqlresolver.models.Book;
+import com.example.graphqlresolver.models.Lol;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.amqp.core.Binding;
 import org.springframework.amqp.core.BindingBuilder;
@@ -15,10 +16,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Configuration
 @ComponentScan("com.example.graphqlresolver.rabbit")
@@ -51,10 +49,18 @@ public class RabbitConfig {
 
 
     @Bean
+    public Set<String> setReq(){return Collections.synchronizedSet(new HashSet<>());}
+
+    @Bean
     public Map<String, Book> receiveMap(){ return Collections.synchronizedMap(new HashMap<>());}
 
     @Bean
     public Map<String, List<Book>> receiveMapList(){ return Collections.synchronizedMap(new HashMap<>());}
+
+    @Bean
+    public Lol lol(){
+        return new Lol();
+    }
 
     @Bean
     public Queue myQueue1() {

@@ -3,9 +3,10 @@ package com.example.graphqlresolver.models;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.io.Serializable;
+import java.util.Arrays;
 import java.util.List;
 
-public class Bookl implements Serializable {
+public class Bookl  {
 
     @JsonProperty("method")
     private String method;
@@ -30,6 +31,7 @@ public class Bookl implements Serializable {
 
     @JsonProperty("bookList")
     private List<Book> bookList;
+
 
     public Bookl(String method, String isn, String title, String publisher, String authors, String published) {
         this.method = method;
