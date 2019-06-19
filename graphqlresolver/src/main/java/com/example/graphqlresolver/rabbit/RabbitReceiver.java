@@ -26,10 +26,7 @@ public class RabbitReceiver {
     Logger logger = Logger.getLogger(String.valueOf(RabbitReceiver.class));
 
     @Autowired
-    Lol lol;
-
-    @Autowired
-    private Set<String> setReq;
+    private Map<String, Lol> mapReq;
 
     @Autowired
     private Map<String, Book> receiveMap;
@@ -62,11 +59,11 @@ public class RabbitReceiver {
                 receiveMapList.put(bookl.getReqId(), bookl.getBookList());
             }
 
-            if (setReq.contains(bookl.getReqId())){
-                synchronized (lol){
-                    lol.notify();
+            if (mapReq.containsKey(bookl.getReqId())){
+                synchronized (mapReq.get(bookl.getReqId())){
+                    mapReq.get(bookl.getReqId()).notify();
                 }
-                setReq.remove(bookl.getReqId());
+                mapReq.remove(bookl.getReqId());
             }
 
         } catch (IOException e) {

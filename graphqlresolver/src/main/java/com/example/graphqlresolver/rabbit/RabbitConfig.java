@@ -16,7 +16,10 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 
-import java.util.*;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 @Configuration
 @ComponentScan("com.example.graphqlresolver.rabbit")
@@ -49,18 +52,13 @@ public class RabbitConfig {
 
 
     @Bean
-    public Set<String> setReq(){return Collections.synchronizedSet(new HashSet<>());}
+    public Map<String, Lol> reqMap(){ return Collections.synchronizedMap(new HashMap<>());}
 
     @Bean
     public Map<String, Book> receiveMap(){ return Collections.synchronizedMap(new HashMap<>());}
 
     @Bean
     public Map<String, List<Book>> receiveMapList(){ return Collections.synchronizedMap(new HashMap<>());}
-
-    @Bean
-    public Lol lol(){
-        return new Lol();
-    }
 
     @Bean
     public Queue myQueue1() {

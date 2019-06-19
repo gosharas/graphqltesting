@@ -13,11 +13,9 @@ import java.util.*;
 @Service
 public class GraphService {
 
-    @Autowired
-    Lol lol;
 
     @Autowired
-    private Set<String> setReq;
+    private Map<String, Lol> mapReq;
 
     @Autowired
     private Map<String, Book> receiveMap;
@@ -34,15 +32,14 @@ public class GraphService {
         bookl.setReqId(reqId);
         rabbitSender.send("info", bookl);
 
-        setReq.add(reqId);
-        synchronized (lol){
+        mapReq.put(reqId, new Lol());
+        synchronized (mapReq.get(reqId)){
             try {
-                lol.wait();
+                mapReq.get(reqId).wait();
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
         }
-
 
         List<Book> list = receiveMapList.get(reqId);
         return list;
@@ -55,10 +52,10 @@ public class GraphService {
         bookl.setIsn(isn);
         bookl.setReqId(reqId);
         rabbitSender.send("info", bookl);
-        setReq.add(reqId);
-        synchronized (lol){
+        mapReq.put(reqId, new Lol());
+        synchronized (mapReq.get(reqId)){
             try {
-                lol.wait();
+                mapReq.get(reqId).wait();
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
@@ -72,11 +69,11 @@ public class GraphService {
         Bookl bookl = new Bookl("bookByTitle");
         bookl.setTitle(title);
         bookl.setReqId(reqId);
-        setReq.add(reqId);
         rabbitSender.send("info", bookl);
-        synchronized (lol){
+        mapReq.put(reqId, new Lol());
+        synchronized (mapReq.get(reqId)){
             try {
-                lol.wait();
+                mapReq.get(reqId).wait();
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
@@ -91,11 +88,11 @@ public class GraphService {
         Bookl bookl = new Bookl("bookByPublisher");
         bookl.setPublisher(publisher);
         bookl.setReqId(reqId);
-        setReq.add(reqId);
         rabbitSender.send("info", bookl);
-        synchronized (lol){
+        mapReq.put(reqId, new Lol());
+        synchronized (mapReq.get(reqId)){
             try {
-                lol.wait();
+                mapReq.get(reqId).wait();
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
