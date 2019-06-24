@@ -2,9 +2,7 @@ package com.example.graphqlresolver.resolver;
 
 import com.coxautodev.graphql.tools.GraphQLQueryResolver;
 import com.example.graphqlresolver.models.Book;
-import com.example.graphqlresolver.models.Bookl;
 import com.example.graphqlresolver.rabbit.RabbitSender;
-import com.example.graphqlresolver.repository.BookRepository;
 import com.example.graphqlresolver.service.GraphService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -16,12 +14,6 @@ public class BookQuery implements GraphQLQueryResolver {
 
     @Autowired
     GraphService graphService;
-
-    @Autowired
-    BookRepository bookRepository;
-
-    @Autowired
-    RabbitSender rabbitSender;
 
     public List<Book> books(){
         return graphService.books();

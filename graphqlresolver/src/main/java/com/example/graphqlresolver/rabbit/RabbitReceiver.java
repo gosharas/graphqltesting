@@ -46,19 +46,33 @@ public class RabbitReceiver {
         try {
             Bookl bookl = mapper.readValue(new String(body), Bookl.class);
             System.out.println(bookl.toString());
-            // TODO: 2019-06-17 НЕ ДОБАВЛЕНА МУТАЦИЯ
-            if (bookl.getMethod().equals("bookByIsn")){
-                Book book = new Book();
-                book.setIsn(bookl.getIsn());
-                book.setTitle(bookl.getTitle());
-                book.setPublished(bookl.getPublished());
-                book.setPublisher(bookl.getPublisher());
-                book.setAuthors(bookl.getAuthors());
-                receiveMap.put(bookl.getReqId(), book);
-            }else {
-                receiveMapList.put(bookl.getReqId(), bookl.getBookList());
+            String method = bookl.getMethod();
+            switch (method){
+                case "bokByIsn":{
+                    Book book = new Book();
+                    book.setIsn(bookl.getIsn());
+                    book.setTitle(bookl.getTitle());
+                    book.setPublished(bookl.getPublished());
+                    book.setPublisher(bookl.getPublisher());
+                    book.setAuthors(bookl.getAuthors());
+                    receiveMap.put(bookl.getReqId(), book);
+                    break;
+                }
+                case "newBook":{
+                    Book book = new Book();
+                    book.setIsn(bookl.getIsn());
+                    book.setTitle(bookl.getTitle());
+                    book.setPublished(bookl.getPublished());
+                    book.setPublisher(bookl.getPublisher());
+                    book.setAuthors(bookl.getAuthors());
+                    receiveMap.put(bookl.getReqId(), book);
+                    break;
+                }
+                default:{
+                    receiveMapList.put(bookl.getReqId(), bookl.getBookList());
+                    break;
+                }
             }
-
             if (mapReq.containsKey(bookl.getReqId())){
                 synchronized (mapReq.get(bookl.getReqId())){
                     mapReq.get(bookl.getReqId()).notify();

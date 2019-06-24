@@ -13,18 +13,14 @@ import java.util.*;
 @Service
 public class GraphService {
 
-
     @Autowired
     private Map<String, Lol> mapReq;
-
     @Autowired
     private Map<String, Book> receiveMap;
     @Autowired
     private Map<String, List<Book>> receiveMapList;
     @Autowired
     RabbitSender rabbitSender;
-
-
 
     public List<Book> books(){
         String reqId = UUID.randomUUID().toString();
@@ -102,7 +98,26 @@ public class GraphService {
     }
 
     public Book newBook(Book book){
-        return null;
+        String reqId = UUID.randomUUID().toString();
+        Bookl bookl = new Bookl("newBook");
+        bookl.setIsn(book.getIsn());
+        bookl.setTitle(book.getTitle());
+        bookl.setPublisher(book.getPublisher());
+        bookl.setAuthors(book.getAuthors());
+        bookl.setPublished(book.getPublished());
+        bookl.setReqId(reqId);
+        rabbitSender.send("info", bookl);
+        mapReq.put(reqId, new Lol());
+        synchronized (mapReq.get(reqId)){
+            try {
+                mapReq.get(reqId).wait();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+        Book list = receiveMap.get(reqId);
+
+        return list;
     }
 
 

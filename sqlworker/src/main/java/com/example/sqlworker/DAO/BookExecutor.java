@@ -52,6 +52,18 @@ public class BookExecutor implements Runnable{
                 bookl.setBookList(bookRepositoryImpl.bookByPublisher(bookl.getPublisher()));
                 break;
             }
+
+            case "newBook":{
+                Book book = bookRepositoryImpl.newBook(new Book(bookl.getIsn(), bookl.getTitle(),
+                        bookl.getPublisher(), bookl.getAuthors(), bookl.getPublished()));
+                bookl.setIsn(book.getIsn());
+                bookl.setTitle(book.getTitle());
+                bookl.setPublished(book.getPublished());
+                bookl.setPublisher(book.getPublisher());
+                bookl.setAuthors(book.getAuthors());
+                break;
+
+            }
         }
 
         rabbitSender.send("info2", bookl);

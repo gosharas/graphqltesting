@@ -5,6 +5,7 @@ import com.example.graphqlresolver.models.Book;
 import com.example.graphqlresolver.models.Bookl;
 import com.example.graphqlresolver.rabbit.RabbitSender;
 import com.example.graphqlresolver.repository.BookRepository;
+import com.example.graphqlresolver.service.GraphService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -12,19 +13,9 @@ import org.springframework.stereotype.Component;
 public class BookMutation implements GraphQLMutationResolver {
 
     @Autowired
-    BookRepository bookRepository;
-
-    @Autowired
-    RabbitSender rabbitSender;
+    GraphService graphService;
 
     public Book newBook(Book book){
-        Bookl bookl = new Bookl("newBook");
-        bookl.setIsn(book.getIsn());
-        bookl.setTitle(book.getTitle());
-        bookl.setAuthors(book.getAuthors());
-        bookl.setPublisher(book.getPublisher());
-        book.setPublished(book.getPublished());
-        rabbitSender.send("info", bookl);
-        return bookRepository.saveAndFlush(book);
+        return graphService.newBook(book);
     }
 }
